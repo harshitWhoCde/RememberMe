@@ -2,10 +2,17 @@ const express = require('express');
 const cors = require('cors');
 const dotenv = require('dotenv');
 
+dotenv.config();
+const connectDB = require('./config/db');
+
+
 const memoryRoutes = require('./routes/memoryRoutes');
 
 // Load environment variables from .env file
-dotenv.config();
+
+
+// Connect to MongoDB
+connectDB();
 
 // Initialize the Express app
 const app = express();
@@ -14,6 +21,8 @@ const app = express();
 app.use(cors()); // Allows your frontend to make requests to this backend
 app.use(express.json()); 
 app.use('/api', memoryRoutes);// Allows the server to accept JSON data in the request body
+
+
 
 // A simple test route to make sure things are working
 app.get('/', (req, res) => {
